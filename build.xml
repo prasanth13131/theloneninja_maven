@@ -1,0 +1,9 @@
+<project name="theloneninja" default="main" basedir=".">
+
+<target name="main">
+<echo>Hi</echo>
+</target>
+
+
+
+</project>
