@@ -1,2 +1,5 @@
 language: java 
-script: ant main 
+script: ant main
+deploy:
+  provider : heroku
+  api_key: cd197f80-7201-4889-9c22-add189ab0619
