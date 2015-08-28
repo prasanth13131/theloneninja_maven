@@ -1,9 +1,77 @@
-<project name="theloneninja" default="main" basedir=".">
+<?xml version="1.0"?>
+<project name="JUNIT" default="main" basedir=".">
+	<!-- Sets variables which can later be used. -->
+	<!-- The value of a property is accessed via ${} -->
+	<property name="src.dir" location="src" />
+	<property name="test.dir" location="testCases" />
 
-<target name="main">
-<echo>Hi</echo>
-</target>
+	<property name="build.dir" location="bin" />
+	<property name="build.test.dir" location="testsbin" />
+
+	<!-- Variables used for JUnit testin -->
+
+	<property name="test.report.dir" location="testreport" />
+
+	<!-- Define the classpath which includes the junit.jar and the classes after compiling-->
+	<path id="junit.class.path">
+		<pathelement location="${basedir}/WebContent/WEB-INF/lib/junit-4.12.jar" />
+		<pathelement location="${basedir}/WebContent/WEB-INF/lib/ojdbc6.jar" />
+		<pathelement location="${basedir}/WebContent/WEB-INF/lib/hamcrest-core-1.3.jar" />
+		<pathelement location="${build.dir}" />
+	</path>
 
 
+	<!-- Deletes the existing build, docs and dist directory-->
+	<target name="clean">
+		<delete dir="${build.dir}" />
+		<delete dir="${test.report.dir}" />
+	</target>
+
+	<!-- Creates the  build, docs and dist directory-->
+	<target name="makedir">
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${build.test.dir}" />
+		<mkdir dir="${test.report.dir}" />
+	</target>
+
+	<!-- Compiles the java code (including the usage of library for JUnit -->
+	<target name="compile" depends="clean, makedir">
+		<javac srcdir="${src.dir}" destdir="${build.dir}">
+			<classpath refid="junit.class.path" />
+		</javac>
+
+		<javac srcdir="${test.dir}" destdir="${build.test.dir}">
+			<classpath refid="junit.class.path" />
+		</javac>
+
+	</target>
+
+	<!-- Run the JUnit Tests -->
+	<!-- Output is XML, could also be plain-->
+	<target name="junit" depends="compile">
+		<junit printsummary="on" fork="true" haltonfailure="no">
+			<classpath refid="junit.class.path" />
+			<classpath>
+			    <pathelement location="${build.test.dir}"/>
+			  </classpath>
+			<formatter type="xml" />
+			<batchtest todir="${test.report.dir}">
+				<fileset dir="${test.dir}">
+					<include name="**/*Test*.java" />
+				</fileset>
+			</batchtest>
+		</junit>
+	</target>
+	<target name="package">
+	<war destfile = "loneninja.war" webxml = "${basedir}/WebContent/WEB-INF/web.xml">
+   <fileset dir = "${basedir}/WebContent">
+      <include name = "**/*.*"/>
+   </fileset>
+   <classes dir = "${build.dir}"/>
+	</war>
+	</target>
+	<target name="main" depends="compile, junit, package">
+		<description>Main target</description>
+	</target>
 
 </project>
