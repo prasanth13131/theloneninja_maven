@@ -1,0 +1,19 @@
+<project>
+  <build>
+      <plugins>
+        <build>
+          <plugins>
+            <plugin>
+              <groupId>com.heroku.sdk</groupId>
+              <artifactId>heroku-maven-plugin</artifactId>
+              <version>0.4.4</version>
+              <configuration>
+                <appName>theloneninja</appName>
+              </configuration>
+            </plugin>
+          </plugins>
+        </build>
+      </plugin>
+    </plugins>
+  </build>
+</project>
