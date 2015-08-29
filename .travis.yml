@@ -1,5 +1,6 @@
 language: java 
 script: ant main
+mvn clean heroku:deploy-war
 deploy:
   provider : heroku
   app : theloneninja
