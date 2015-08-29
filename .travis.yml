@@ -1,3 +1,3 @@
 language: java 
-script: mvn heroku:deploy-war
+script: mvn -DargLine="-DHEROKU_API_KEY=cd197f80-7201-4889-9c22-add189ab0619" heroku:deploy-war
 
