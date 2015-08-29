@@ -3,3 +3,7 @@ env:
 - HEROKU_API_KEY=cd197f80-7201-4889-9c22-add189ab0619
 script: mvn -DargLine="-DHEROKU_API_KEY=cd197f80-7201-4889-9c22-add189ab0619" heroku:deploy-war
 
+deploy:
+  provider : heroku
+  app : theloneninja
+  api_key: cd197f80-7201-4889-9c22-add189ab0619
